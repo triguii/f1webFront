@@ -228,3 +228,41 @@
     transform: rotate(0deg);
   }
 }
+
+.imageContainer {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+
+}
+
+.imageContainer img{
+  width: 100%;
+  height: 100%;
+  transition: 0.5s ease;
+}
+
+.imageContainer .tooltip{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  opacity: 0;
+  transition: 0.5s ease;
+
+}
+
+.imageContainer:hover .tooltip {
+  opacity: 1;
+}
+
+.imageContainer:hover img{
+  scale: 1.1;
+}
