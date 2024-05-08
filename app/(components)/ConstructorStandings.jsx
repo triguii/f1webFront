@@ -1,0 +1,216 @@
+'use client'
+
+import { useEffect, useState } from 'react';
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend
+  } from "recharts";
+
+import { Slider } from '@mui/material';
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+
+        payload.length > 1 ? 
+        <div>
+          <h4>{label}</h4>
+          <p>{`Puntos ${payload[0].payload.team} : ${payload[0].payload.Ferrari}`}</p>
+          <p>{`Puntos ${payload[1].payload.team2} : ${payload[1].payload.RedBull}`}</p>
+          <p>{`Carrera : ${payload[0].payload.raceName}`}</p>
+          <p>{`Ronda : ${payload[0].payload.round}`}</p>
+  
+        </div>
+        :
+        <div>
+        <h4>{label}</h4>
+        <p>{`Puntos ${payload[0].payload.team} : ${payload[0].payload.Ferrari}`}</p>
+        <p>{`Carrera: ${payload[0].payload.raceName}`}</p>
+        <p>{`Ronda : ${payload[0].payload.round}`}</p>
+   
+      </div>
+
+
+    )
+  }
+
+  return null;
+};
+
+export default function ConstructorsTimeGraph ({}) {
+
+    const [standingsData, setStandingsData] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [años, setAños] = useState([1997, 2009 ]);
+    const [filterStandingsData, setFilterStandingsData] = useState(false)
+
+
+    useEffect(() => {
+
+        let datatoappend = []
+
+      
+        fetch("http://127.0.0.1:8080/api/getConstructorStandings/6")
+        .then((response) => response.json())
+        .then((data) => {
+
+            datatoappend.push(...data)
+
+            fetch("http://127.0.0.1:8080/api/getConstructorStandings/9")
+            .then((response) => response.json())
+            .then((data) => {
+
+   
+              data.forEach(element => {
+                
+                const foundElement = datatoappend.find(obj => obj.raceId === element.raceId);
+                if (foundElement){
+                  foundElement.RedBull = element.points9
+                  foundElement.team2 = element.team
+
+                }
+
+              });
+
+              fetch("http://127.0.0.1:8080/api/getConstructorStandings/19")
+              .then((response) => response.json())
+              .then((data) => {
+     
+                data.forEach(element => {
+                  
+                  const foundElement = datatoappend.find(obj => obj.raceId === element.raceId);
+                  if (foundElement){
+                    foundElement.RedBull = element.points19
+                    foundElement.team2 = element.team
+
+                  }
+  
+                });
+
+                fetch("http://127.0.0.1:8080/api/getConstructorStandings/24")
+                .then((response) => response.json())
+                .then((data) => {
+       
+                  data.forEach(element => {
+                    
+                    const foundElement = datatoappend.find(obj => obj.raceId === element.raceId);
+                    if (foundElement){
+                      foundElement.RedBull = element.points24
+                      foundElement.team2 = element.team
+
+                    }
+    
+                  });
+
+                  datatoappend.sort((a, b) => {
+                    if (a.year != b.year){
+                        return a.year - b.year; // Ascending order
+                    }
+                    else {
+                        return a.round - b.round;
+                    }
+                    // To sort in descending order, use: return b.age - a.age;
+                });
+                datatoappend = datatoappend.filter(obj => obj.year >= años[0] && obj.year <= años[1])
+    
+                setStandingsData(datatoappend)
+                setFilterStandingsData(datatoappend)
+    
+    
+                setLoading(false)
+    
+    
+        
+                }); 
+  
+              });  
+  
+            });  
+    
+        });
+
+    }, [])
+
+    const handleChange = (event, newValue) => {
+      setAños(newValue);
+    };
+
+    useEffect(() => {
+      if (!loading){
+        let datatofilter = standingsData
+
+        datatofilter = datatofilter.filter(obj => obj.year >= años[0] && obj.year <= años[1])
+
+        setFilterStandingsData(datatofilter)
+      }
+    }, [años])
+
+
+
+
+    return( loading? '' :
+        <>
+        <h2 style={{textAlign: 'center'}}>Evolución de puntos conseguidos por carrera en cada temporada</h2>
+        <h4 style={{textAlign: 'center'}}>Seleccionar año/s</h4>
+        <Slider
+          getAriaLabel={() => 'Año'}
+          value={años}
+          onChange={handleChange}
+          valueLabelDisplay="auto"
+          min={1997}
+          max={2009}
+          sx={{width: '10rem', position:'absolute', left: '47%',marginBottom: '1rem'}}
+        />
+        <div style={{marginLeft: '5%'}}>
+
+        <LineChart
+        width={1700}
+        height={1000}
+        data={filterStandingsData}
+        margin={{
+          top: 5,
+          right: 5,
+          left: 5,
+          bottom: 5
+        }}
+        style={{position:'absolute', left: '10%',marginTop: '5rem'}}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="year" />
+        <YAxis />
+        <Tooltip  content={<CustomTooltip />}/>
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="Ferrari"
+          stroke="#8884d8"
+          strokeWidth={3}
+        />
+        <Line
+          type="monotone"
+          dataKey="RedBull"
+          stroke="#82ca9d"
+          strokeWidth={3}
+        />
+        <Line
+          type="monotone"
+          dataKey="Jaguar"
+          stroke="#82ca9d"
+          strokeWidth={3}
+        />
+        <Line
+          type="monotone"
+          dataKey="Stewart"
+          stroke="#82ca9d"
+          strokeWidth={3}
+        />
+      </LineChart>
+      </div>
+      </>
+    )
+}

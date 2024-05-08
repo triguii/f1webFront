@@ -11,7 +11,7 @@ import {
     Legend
   } from "recharts";
 
-import { Slider } from '@mui/material';
+import { Slider, Select, MenuItem } from '@mui/material';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -22,6 +22,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         <h4>{label}</h4>
         <p>{`Puntos Alonso : ${payload[0].payload.Alonso}`}</p>
         <p>{`Puntos Vettel : ${payload[1].payload.Vettel}`}</p>
+        <p>{`Posición Alonso : ${payload[1].payload['Posicion Alonso']}`}</p>
+        <p>{`Posición Vettel : ${payload[1].payload['Posicion Vettel']}`}</p>
         <p>{`Carrera : ${payload[0].payload.raceName}`}</p>
         <p>{`Ronda : ${payload[0].payload.round}`}</p>
 
@@ -30,6 +32,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       <div>
       <h4>{label}</h4>
       <p>{`Puntos Alonso : ${payload[0].payload.Alonso}`}</p>
+      <p>{`Posición Alonso : ${payload[0].payload['Posicion Alonso']}`}</p>
       <p>{`Carrera: ${payload[0].payload.raceName}`}</p>
       <p>{`Ronda : ${payload[0].payload.round}`}</p>
 
@@ -48,6 +51,12 @@ export default function StandingsTimeGraph ({}) {
     const [loading, setLoading] = useState(true)
     const [años, setAños] = useState([2003, 2009 ]);
     const [filterStandingsData, setFilterStandingsData] = useState(false)
+
+    const [graphType, setGraphType] =useState('points');
+
+    const handleChangeGraph = (event) => {
+      setGraphType(event.target.value);
+    };
 
 
     useEffect(() => {
@@ -70,6 +79,7 @@ export default function StandingsTimeGraph ({}) {
                 const foundElement = datatoappend.find(obj => obj.raceId === element.raceId);
                 if (foundElement){
                   foundElement.Vettel = element.points20
+                  foundElement["Posicion Vettel"] = element["Posicion Vettel"]
                 }
 
               });
@@ -126,10 +136,21 @@ export default function StandingsTimeGraph ({}) {
           max={2009}
           sx={{width: '10rem', marginLeft: '47%'}}
         />
+        <Select
+          labelId="selectType"
+          id="selectType"
+          value={graphType}
+          label="Valor"
+          onChange={handleChangeGraph}
+          sx={{marginLeft: '1rem'}}
+        >
+          <MenuItem value={'position'}>Posición Mundial</MenuItem>
+          <MenuItem value={'points'}>Puntos Mundial</MenuItem>
+        </Select>
         <div style={{marginLeft: '5%'}}>
 
         <LineChart
-        width={2000}
+        width={1700}
         height={1000}
         data={filterStandingsData}
         margin={{
@@ -141,18 +162,22 @@ export default function StandingsTimeGraph ({}) {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
-        <YAxis />
+        {graphType == 'position' ?
+        <YAxis reversed={true}  domain={[1, 'dataMax']}/>
+        :
+        <YAxis/>}
         <Tooltip  content={<CustomTooltip />}/>
         <Legend />
+        
         <Line
           type="monotone"
-          dataKey="Alonso"
+          dataKey={graphType == 'position' ? "Posicion Alonso" : "Alonso"}
           stroke="#8884d8"
           strokeWidth={3}
         />
         <Line
           type="monotone"
-          dataKey="Vettel"
+          dataKey={graphType == 'position' ? "Posicion Vettel" : "Vettel"}
           stroke="#82ca9d"
           strokeWidth={3}
         />
