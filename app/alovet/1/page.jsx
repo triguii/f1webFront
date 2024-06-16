@@ -21,10 +21,9 @@ export default function alovetPage () {
           router.push('/alovet/2')
         }}/>
         <h2 style={{textAlign: 'center'}}>Cara a cara: Antes de 2010</h2>
+        
         <ImagesPilotsAlonso/>
-        <h2 style={{display: 'inline-block', maxWidth: '20rem', marginLeft: '2rem'}}> Un bicampeón que pretenderá volver a ganar en un nuevo equipo con mucha historia</h2>
         <ImagesPilotsVettel/>
-        <h2 style={{display: 'inline-block', float: "right" ,maxWidth: '20rem', marginRight: '2rem'}}> Una promesa en alza que buscará el primer mundial para un RedBull cada vez más dominante</h2>
         <Head2headGraph/>
         <StandingsTimeGraph/>
 

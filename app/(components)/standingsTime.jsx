@@ -15,7 +15,6 @@ import { Slider, Select, MenuItem } from '@mui/material';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
-    console.log(payload[0].payload)
     return (
       payload.length > 1 ? 
       <div>
@@ -125,7 +124,9 @@ export default function StandingsTimeGraph ({}) {
 
     return( loading? '' :
         <>
-        <h2 style={{textAlign: 'center'}}>Evolución de puntos conseguidos por carrera en cada temporada</h2>
+        {graphType == 'points' ? <h2 style={{textAlign: 'center'}}>Evolución de puntos conseguidos por carrera en cada temporada</h2> : 
+        <h2 style={{textAlign: 'center'}}>Evolución de posición en el mundial en cada carrera</h2>
+        }
         <h4 style={{textAlign: 'center'}}>Seleccionar año/s</h4>
         <Slider
           getAriaLabel={() => 'Año'}
@@ -147,7 +148,7 @@ export default function StandingsTimeGraph ({}) {
           <MenuItem value={'position'}>Posición Mundial</MenuItem>
           <MenuItem value={'points'}>Puntos Mundial</MenuItem>
         </Select>
-        <div style={{marginLeft: '5%'}}>
+        <div style={{marginLeft: '20%'}}>
 
         <LineChart
         width={1700}

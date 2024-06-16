@@ -93,7 +93,7 @@ export default function Head2headGraph ({}){
 
 
     return(loading ? '':
-    <div style={{display: 'inline-block', marginLeft: '20rem'}}>
+    <div style={{display: 'inline-block',  justifyContent: 'center', marginLeft: '35%'}}>
         <h4 style={{textAlign: 'center'}}>Head 2 Head de los dos Pilotos contra sus compañeros</h4>
 
         <Select
