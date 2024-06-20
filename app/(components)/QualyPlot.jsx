@@ -2,68 +2,104 @@
 
 import React, { useEffect, useState } from "react";
 import {
-    ScatterChart,
-    Scatter,
-    XAxis,
-    YAxis,
-    ZAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend
-  } from "recharts";
+  ScatterChart,
+  LineChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  ZAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  Line
+} from "recharts";
 
 import QualyTable from "./QualyTable";
+import getColorPilots from "@/config/colors";
+import getName2Id from "@/config/name2id";
 
-export default function QualyPlot ( {pilots, pilotsObject} ){
+export default function QualyPlot({ pilots, pilotsObject }) {
 
-    const [qualyData, setQualyData] = useState([])
+  const colorPilots = getColorPilots()
+  const name2id = getName2Id()
 
-    useEffect(() =>  {
-        setQualyData([])
+  const [qualyData, setQualyData] = useState([
+    { "Sesión": 'Q1' },
+    { "Sesión": 'Q2' },
+    { "Sesión": 'Q3' }
+  ])
+  const [tableData, setTableData] = useState([])
 
-        pilots.map(element => {        
-            fetch("http://127.0.0.1:8080/api/getQualyData/355/" + pilotsObject[element])
-            .then((response) => response.json())
-            .then((data) => {
-                data[0].Piloto = element
-                data[0]['Q1 s'] = data[0]["Q1 ms"] / 1000
-                data[0]['Q2 s'] = data[0]["Q2 ms"] / 1000
-                data[0]['Q3 s'] = data[0]["Q3 ms"] / 1000
-                setQualyData(qualyData => [...qualyData, data[0]])
-            })
-            
+
+  useEffect(() => {
+    setTableData([])
+    setQualyData([
+      { "Sesión": 'Q1' },
+      { "Sesión": 'Q2' },
+      { "Sesión": 'Q3' }
+    ])
+
+    qualyData[0] = { "Sesión": 'Q1' }
+    qualyData[1] = { "Sesión": 'Q2' }
+    qualyData[2] = { "Sesión": 'Q3' }
+
+    pilots.map(element => {
+      fetch("http://127.0.0.1:8080/api/getQualyData/355/" + pilotsObject[element])
+        .then((response) => response.json())
+        .then((data) => {
+          let Q1Data = qualyData[0]
+          let Q2Data = qualyData[1]
+          let Q3Data = qualyData[2]
+          data[0].Piloto = element
+          data[0]['Q1 s'] = data[0]["Q1 ms"] ? data[0]["Q1 ms"] / 1000 : null
+          data[0]['Q2 s'] = data[0]["Q2 ms"] ? data[0]["Q2 ms"] / 1000 : null
+          data[0]['Q3 s'] = data[0]["Q3 ms"] ? data[0]["Q3 ms"] / 1000 : null
+          Q1Data[element] = data[0]['Q1 s']
+          Q2Data[element] = data[0]['Q2 s']
+          Q3Data[element] = data[0]['Q3 s']
+
+          setQualyData([Q1Data, Q2Data, Q3Data])
+          setTableData(tableData => [...tableData, data[0]])
+        })
+
+
+
     })
-    },[pilots])
+  }, [pilots])
 
-    console.log(qualyData)
-
-    return(
-      <div style={{float: 'right'}}>
-        <div style={{float: 'left'}}>
-        <QualyTable qualyData={qualyData}/>
-        </div>
-        <ScatterChart
+  return (
+    <div style={{ float: 'right' }}>
+      <div style={{ float: 'left' }}>
+        <QualyTable qualyData={tableData} />
+      </div>
+      <LineChart
         width={900}
         height={700}
+        data={qualyData}
         margin={{
           top: 20,
           right: 20,
           bottom: 20,
           left: 20
         }}
-        style={{float: 'right'}}
+        style={{ float: 'right' }}
       >
         <CartesianGrid />
-        <XAxis type="category" dataKey="Piloto" name="Piloto" allowDuplicatedCategory={false}/>
-        <YAxis type="number"  name="Tiempo (s)"  domain={['dataMin - 1', 'dataMax + 1']}/>
+        <XAxis type="category" dataKey="Sesión" name="Sesión" allowDuplicatedCategory={false} />
+        <YAxis type="number" name="Tiempo (s)" domain={['dataMin - 1', 'dataMax + 1']} />
 
-        <Tooltip cursor={{ strokeDasharray: "3 3" }}/>
+        <Tooltip cursor={{ strokeDasharray: "3 3" }} />
         <Legend />
-        <Scatter name="Q1" data={qualyData} dataKey="Q1 s" fill="#8884d8"  />
-        <Scatter name="Q2" data={qualyData} dataKey="Q2 s" fill="#82ca9d"  />
-        <Scatter name="Q3" data={qualyData} dataKey="Q3 s" fill="red"  />
+        {Object.entries(qualyData[0]).map((element, index) => {
+          return (
+            element[0] != 'Sesión' ?
+              <Line type="linear" dataKey={element[0]} stroke={colorPilots[name2id[element[0]]]} />
+              : ''
+          )
+        })}
 
-      </ScatterChart>
-      </div>
-    )
+
+      </LineChart>
+    </div>
+  )
 }

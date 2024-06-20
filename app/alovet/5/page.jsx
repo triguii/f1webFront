@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import ScatterTiempos from "@/app/(components)/ScatterTiempos";
 import RacePosition from "@/app/(components)/RacePosition";
 import RaceStandingsTable from "@/app/(components)/RaceStandingsTable";
+import getName2Id from "@/config/name2id";
 
 export default function alovetPage() {
 
@@ -78,12 +79,7 @@ export default function alovetPage() {
       },[pilots])
 
 
-    const pilotsObject = {
-        "Sebastian Vettel": "20",
-        "Fernando Alonso": "4",
-        "Lewis Hamilton": "1",
-        "Mark Webber": "17"
-    }
+    const pilotsObject = getName2Id()
 
     return (
         <>

@@ -33,8 +33,8 @@ export default function ScatterTiempos ({graphsData}){
         }}
       >
         <CartesianGrid />
-        <XAxis type="number" dataKey="Vuelta" name="Vuelta" label="Vuelta"/>
-        <YAxis type="number" dataKey="Tiempo sec" name="Tiempo (s)" label={{ value: "Tiempo (s)", angle: -90, position: 'insideLeft' }}  domain={['dataMin', 'dataMax - 20']}/>
+        <XAxis type="number" dataKey="Vuelta" name="Vuelta" label="Vuelta" allowDuplicatedCategory={false}/>
+        <YAxis type="number" allowDuplicatedCategory={false} dataKey="Tiempo sec" name="Tiempo (s)" label={{ value: "Tiempo (s)", angle: -90, position: 'insideLeft' }}  domain={['dataMin', 'dataMax - 20']}/>
 
         <Tooltip cursor={{ strokeDasharray: "3 3" }}/>
         <Legend />

@@ -7,6 +7,7 @@ import { Select, MenuItem, Checkbox, ListItemText  } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { useRouter } from 'next/navigation';
 import Standings2010 from "@/app/(components)/Standings2010";
+import getName2Id from "@/config/name2id";
 
 
 
@@ -31,12 +32,7 @@ export default function alovetPage () {
 
     const [pilots, setPilots] = useState([])
 
-    const pilotsObject = {
-        "Sebastian Vettel" : "20",
-        "Fernando Alonso" : "4",
-        "Lewis Hamilton" : "1",
-        "Mark Webber" : "17"
-    }
+    const pilotsObject = getName2Id()
 
     useEffect (() => {
         fetch("http://127.0.0.1:8080/api/getRaceResults/354")

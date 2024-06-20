@@ -11,6 +11,7 @@ import {
     Legend
   } from "recharts";
 
+
 import { Slider, Select, MenuItem } from '@mui/material';
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -238,8 +239,10 @@ export default function ConstructorsTimeGraph ({}) {
         <XAxis dataKey="year" />
         {graphType == 'position' ?
         <YAxis reversed={true}  domain={[1, 'dataMax']}/>
-        :
-        <YAxis/>}
+        : graphType == 'pointsAcc' ?
+        <YAxis scale="sqrt" domain={['auto', 'auto']}/>
+        :<YAxis />
+      }
         <Tooltip  content={<CustomTooltip />}/>
         <Legend />
         <Line
@@ -257,13 +260,13 @@ export default function ConstructorsTimeGraph ({}) {
         <Line
           type="monotone"
           dataKey={graphType == 'points' ? "Puntos Jaguar" : graphType == 'position' ? "Posición Jaguar" : graphType == 'pointsAcc' ? "Puntos acumulados Jaguar" : "Puntos carrera Jaguar"}
-          stroke="#82ca9d"
+          stroke="blue"
           strokeWidth={3}
         />
         <Line
           type="monotone"
           dataKey={graphType == 'points' ? "Puntos Stewart" : graphType == 'position' ? "Posición Stewart" : graphType == 'pointsAcc' ? "Puntos acumulados Stewart" : "Puntos carrera Stewart"}
-          stroke="#82ca9d"
+          stroke="pink"
           strokeWidth={3}
         />
       </LineChart>

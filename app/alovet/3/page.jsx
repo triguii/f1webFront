@@ -18,7 +18,7 @@ import {
     Legend
   } from "recharts";
 
-
+import ScatterEquipos from '@/app/(components)/ScatterEquipos';
 
 export default function alovetPage () {
 
@@ -61,30 +61,26 @@ export default function alovetPage () {
             })
             
       })
+
+      fetch("http://127.0.0.1:8080/api/getRaceResults/" + round)
+      .then((response) => response.json())
+      .then((data) => {
+
+          data.sort((a, b) => {
+
+                  return a['Posicion Mundial'] - b['Posicion Mundial']; // Ascending order
+              
+
+              // To sort in descending order, use: return b.age - a.age;
+          });
+
+          setGraphData(data)
+          setImageGanador (data.find((element) => element['Posicion Carrera'] == 1))
+          
+
+      })
       },[round])
 
-
-    useEffect(() => {
-
-        fetch("http://127.0.0.1:8080/api/getRaceResults/" + round)
-        .then((response) => response.json())
-        .then((data) => {
-
-            data.sort((a, b) => {
-
-                    return a['Posicion Mundial'] - b['Posicion Mundial']; // Ascending order
-                
-
-                // To sort in descending order, use: return b.age - a.age;
-            });
-
-            setGraphData(data)
-            setImageGanador (data.find((element) => element['Posicion Carrera'] == 1))
-
-
-        })
-
-    }, [round])
 
     const router = useRouter()
 
@@ -109,6 +105,8 @@ export default function alovetPage () {
                 <img src={pathImg} style={{width: '400px'}}></img>
                 <h2>{imageGanador.Piloto} y {driverToTeam[imageGanador.Piloto]} conseguían la victoria.</h2>
                 <ScatterTiempos graphsData = {lapsData}/>
+                <ScatterEquipos graphsData={graphData}/>
+
 
         </div>
         <h4>Selecciona la ronda</h4>

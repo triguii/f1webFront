@@ -44,11 +44,10 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function StandingsTimeGraph ({}) {
+export default function StandingsTimeGraph ({años}) {
 
     const [standingsData, setStandingsData] = useState(false)
     const [loading, setLoading] = useState(true)
-    const [años, setAños] = useState([2003, 2009 ]);
     const [filterStandingsData, setFilterStandingsData] = useState(false)
 
     const [graphType, setGraphType] =useState('points');
@@ -106,9 +105,7 @@ export default function StandingsTimeGraph ({}) {
 
     }, [])
 
-    const handleChange = (event, newValue) => {
-      setAños(newValue);
-    };
+
 
     useEffect(() => {
       if (!loading){
@@ -127,16 +124,7 @@ export default function StandingsTimeGraph ({}) {
         {graphType == 'points' ? <h2 style={{textAlign: 'center'}}>Evolución de puntos conseguidos por carrera en cada temporada</h2> : 
         <h2 style={{textAlign: 'center'}}>Evolución de posición en el mundial en cada carrera</h2>
         }
-        <h4 style={{textAlign: 'center'}}>Seleccionar año/s</h4>
-        <Slider
-          getAriaLabel={() => 'Año'}
-          value={años}
-          onChange={handleChange}
-          valueLabelDisplay="auto"
-          min={2003}
-          max={2009}
-          sx={{width: '10rem', marginLeft: '47%'}}
-        />
+
         <Select
           labelId="selectType"
           id="selectType"
