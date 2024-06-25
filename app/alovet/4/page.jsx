@@ -35,7 +35,8 @@ export default function alovetPage () {
     const pilotsObject = getName2Id()
 
     useEffect (() => {
-        fetch("http://127.0.0.1:8080/api/getRaceResults/354")
+
+        fetch("https://flask-api-lake.vercel.app/api/getRaceResults/354")
         .then((response) => response.json())
         .then((data) => {
 
@@ -62,15 +63,37 @@ export default function alovetPage () {
     }, [pilots])
 
 
-    return(
-        <>
+    return( filteredGraphData ? 
+        <article style={{ textAlign: 'center', marginLeft: '2rem', marginRight: '2rem' }}>
             <ArrowBackIos sx={{position:'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem'}} onClick={() => {
             router.push('/alovet/3')
             }}/>
             <ArrowForwardIos sx={{position:'fixed', right: '2rem', float: 'left', cursor: 'pointer'}} onClick={() => {
             router.push('/alovet/5')
             }}/>
-            <h2>Abu Dhabi 2010: Pelea final por el mundial</h2>
+            <h1 style={{ textAlign: 'center', fontSize: '40px' }}>Abu Dhabi 2010: Pelea final por el mundial</h1>
+            <h2 style={{ fontSize: '30px' }}> La lluita final per el campionat </h2>
+            <p style={{ color: "#121f45", fontSize: '25px', fontWeight: 'bold' }}> L'última cursa de la temporada. Arribats a aquest punt, Alonso nomès tenia 6 punts d'avantatge respecte a Vettel. Per referencia, la distribució de punts d'aquesta cursa era la següent : <br/></p>
+            <p style={{ color: "#121f45", fontSize: '25px'}}>
+            1º : 25 punts <br/>
+            2º : 18 punts <br/>
+            3º : 15 punts <br/>
+            4º : 12 punts <br/>
+            5º : 10 punts <br/>
+            6º : 8 punts <br/>
+            7º : 6 punts <br/>
+            8º : 4 punts <br/>
+            9º : 2 punts <br/>
+            10º : 1 punts <br/>
+            </p>
+            <p style={{ color: "#121f45", fontSize: '25px', fontWeight: 'bold' }}>
+            Degut a l'alta competitivitat al llarg de la temporada, arribats a aquesta última cursa, 4 pilots diferents tenien opcions de guanyar el campionat : Fernando Alonso, Sebastian Vettel, Mark Webber i Lewis Hamilton.
+            </p>
+            <div style={{ display: 'inline-block', marginRight: '10rem', verticalAlign: 'middle' }}>
+
+                <Standings2010 standingsData={filteredGraphData} dataMin={pilots.length > 0 ? true : false}/>
+
+            </div>
 
             <Select
             labelId="checkboxPilots"
@@ -91,8 +114,8 @@ export default function alovetPage () {
             </Select>
             <QualyPlot pilots={pilots}  pilotsObject={pilotsObject}/>
             <h4>Clasificación en el mundial antes de la carrera</h4>
-            <Standings2010 standingsData={filteredGraphData} dataMin={true}/>
 
-        </>
+        </article>
+        : ''
     )
 }

@@ -1,141 +1,168 @@
 'use client'
 
-import { Slider } from '@mui/material';
+import { Slider, Switch } from '@mui/material';
 import Standings2010 from "@/app/(components)/Standings2010"
 import { useState, useEffect } from 'react';
 import RaceStandingsTable from '@/app/(components)/RaceStandingsTable';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { useRouter } from 'next/navigation';
 import ScatterTiempos from '@/app/(components)/ScatterTiempos';
-import {
-    ScatterChart,
-    Scatter,
-    XAxis,
-    YAxis,
-    ZAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend
-  } from "recharts";
+
 
 import ScatterEquipos from '@/app/(components)/ScatterEquipos';
 
-export default function alovetPage () {
+export default function alovetPage() {
 
     const handleChange = (event, newValue) => {
         setRound(newValue);
     };
 
+
+    const handleChangeSwitch = (event) => {
+      setChecked(event.target.checked);
+    };
+
     const [graphData, setGraphData] = useState(false)
+    const [checked, setChecked] = useState(true);
     const [races, setRaces] = useState([337, 354])
     const [round, setRound] = useState(337)
     const [imageGanador, setImageGanador] = useState('')
     const [lapsData, setLapsData] = useState([])
 
-    const pilots = ["4","20"]
-    
-    useEffect(() =>  {
+    const pilots = ["4", "20"]
+
+    useEffect(() => {
         setLapsData([])
-        
-        pilots.map(pilot => {   
-            fetch("http://127.0.0.1:8080/api/getRaceTimes/" + round + "/" + pilot)
+
+        pilots.map(pilot => {
+            fetch("https://flask-api-lake.vercel.app/api/getRaceTimes/" + round + "/" + pilot)
+                .then((response) => response.json())
+                .then((data) => {
+
+                    let datatoadd = []
+
+                    data.forEach(element => {
+
+                        element['Tiempo sec'] = (element['Tiempo ms'] / 1000)
+                        datatoadd.push(element)
+
+                    })
+
+                    if (lapsData) {
+                        setLapsData(lapsData => [...lapsData, datatoadd])
+                    }
+                    else {
+                        setLapsData(datatoadd)
+                    }
+
+                })
+
+        })
+
+        fetch("https://flask-api-lake.vercel.app/api/getRaceResults/" + round)
             .then((response) => response.json())
             .then((data) => {
-  
-              let datatoadd = []
-  
-                data.forEach(element => { 
-  
-                    element['Tiempo sec'] = (element['Tiempo ms']/1000)
-                    datatoadd.push(element)
-  
-                })
-                
-                if (lapsData){
-                setLapsData(lapsData => [...lapsData, datatoadd])
-                }
-                else{
-                    setLapsData(datatoadd)
-                }
-  
+
+                data.sort((a, b) => {
+
+                    return a['Posicion Mundial'] - b['Posicion Mundial']; // Ascending order
+
+
+                    // To sort in descending order, use: return b.age - a.age;
+                });
+
+                setGraphData(data)
+                setImageGanador(data.find((element) => element['Posicion Carrera'] == 1))
+
+
             })
-            
-      })
-
-      fetch("http://127.0.0.1:8080/api/getRaceResults/" + round)
-      .then((response) => response.json())
-      .then((data) => {
-
-          data.sort((a, b) => {
-
-                  return a['Posicion Mundial'] - b['Posicion Mundial']; // Ascending order
-              
-
-              // To sort in descending order, use: return b.age - a.age;
-          });
-
-          setGraphData(data)
-          setImageGanador (data.find((element) => element['Posicion Carrera'] == 1))
-          
-
-      })
-      },[round])
+    }, [round])
 
 
     const router = useRouter()
 
-    const driverToTeam = {'Hamilton' : 'Mclaren', 'Button' : 'Mclaren', 'Webber' : 'Redbull', 'Vettel' : 'Redbull', 'Alonso' : 'Ferrari'}
+    const driverToTeam = { 'Hamilton': 'Mclaren', 'Button': 'Mclaren', 'Webber': 'Redbull', 'Vettel': 'Redbull', 'Alonso': 'Ferrari' }
 
-    const pathImg = "/alovet/"+imageGanador.Piloto+"_2010.jpg"
-        
-    
+    const pathImg = "/alovet/" + imageGanador.Piloto + "_2010.jpg"
+
+
 
 
     return (
-        graphData ?     <>
-        <ArrowBackIos sx={{position:'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem'}} onClick={() => {
-          router.push('/alovet/2')
-        }}/>
-        <ArrowForwardIos sx={{position:'fixed', right: '2rem', float: 'left', cursor: 'pointer'}} onClick={() => {
-          router.push('/alovet/4')
-        }}/>
-        <h1>Mundial 2010 : Antes de Abu Dhabi</h1>
-        <h2>{graphData[0].name} (Ronda {graphData[0].ronda})</h2>
-        <div style={{float:'right', justifyContent: 'center', marginRight: '1rem'}}>
-                <img src={pathImg} style={{width: '400px'}}></img>
-                <h2>{imageGanador.Piloto} y {driverToTeam[imageGanador.Piloto]} conseguían la victoria.</h2>
-                <ScatterTiempos graphsData = {lapsData}/>
-                <ScatterEquipos graphsData={graphData}/>
+        graphData ?
+            <article style={{ textAlign: 'center', marginLeft: '2rem', marginRight: '2rem' }}>
+                <ArrowBackIos sx={{ position: 'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem' }} onClick={() => {
+                    router.push('/alovet/2')
+                }} />
+                <ArrowForwardIos sx={{ position: 'fixed', right: '2rem', float: 'left', cursor: 'pointer' }} onClick={() => {
+                    router.push('/alovet/4')
+                }} />
+                <h1 style={{ textAlign: 'center', fontSize: '40px' }}>Mundial de 2010 : Primer enfrontament</h1>
+                <h2 style={{ fontSize: '30px' }}> El primer enfrontament entre <span style={{ color: '#ff2800' }}>Alonso</span> i <span style={{ color: '#121f45' }}>Vettel</span> </h2>
+
+                <p style={{ color: "#121f45", fontSize: '25px', fontWeight: 'bold' }}> La primera temporada de Alonso a Ferrari, i la segona després del canvi de normativa de 2009. Tota la temporada va estar molt igualada per els dos pilots, que van arribar molt igualats a la última cursa d'Abu Dhabi, amb Alonso primer amb 8 punts per davant.</p>
+                <hr style={{ height: '3px', boxShadow: '2', backgroundColor: 'black', marginBottom: '2rem' }} />
 
 
-        </div>
-        <h4>Selecciona la ronda</h4>
+                <h4 style={{ color: "#121f45", fontSize: '20px' }}> Fes ús d'aquest control per seleccionar quina cursa vols veure de la temporada i veure l'evolució</h4>
 
-        <Slider
-            getAriaLabel={() => 'Ronda'}
-            value={round}
-            onChange={handleChange}
-            marks
-            min={races[0]}
-            max={races[1]}
-            sx={{width: '20rem', marginTop:'1rem', marginLeft:'3rem'}}
-        /> 
-        <div>
-            <h4>Resultados de la carrera</h4>
-
-            <RaceStandingsTable standingsData={graphData}/>
+                <Slider
+                    getAriaLabel={() => 'Ronda'}
+                    value={round}
+                    onChange={handleChange}
+                    marks
+                    min={races[0]}
+                    max={races[1]}
+                    sx={{ width: '20rem', marginTop: '1rem', marginLeft: '3rem' }}
+                />
 
 
 
-        </div>
-        <div>
-            <h4>Clasificación del mundial</h4>
-            <Standings2010 standingsData={graphData}/>
+                <h2>{graphData[0].name} (Ronda {graphData[0].ronda})</h2>
+                <div>
+                    <div style={{ display: 'inline-block', marginRight: '10rem', verticalAlign: 'middle' }}>
 
-        </div>
+                        <img src={pathImg} style={{ width: '400px' }}></img>
+                        <h2>{imageGanador.Piloto} i {driverToTeam[imageGanador.Piloto]} van aconseguir la victoria.</h2>
+                    </div>
+                    <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+
+                        <h4>Resultados de la carrera</h4>
+
+                        <RaceStandingsTable standingsData={graphData} />
+                    </div>
+                </div>
+                <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
+                    <h4>Clasificació del mundial després de la cursa</h4>
+                    <Standings2010 standingsData={graphData} />
+
+                </div>
+
+                <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
+                    <h4>En quant als diferents equips, així va ser com van quedar a la cursa</h4>
+                    <ScatterEquipos graphsData={graphData} />
 
 
-        </> : ''
-)
+                </div>
+                <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
+                    <h4>I els nostres dos protagonistes, aquí podem veure la seva evolució dels temps de les voltes al llarg de la cursa. </h4>
+                    <h4 style={{fontWeight: 'normal'}}>Els outliers es deben a parades a boxes. Si vols eliminar-los, desactiva aquest control:</h4>
+                    <Switch
+                        checked={checked}
+                        onChange={handleChangeSwitch}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+
+    
+                    <ScatterTiempos graphsData={lapsData} outliers={checked}/>
+
+                </div>
+
+
+
+
+
+            </article> : ''
+    )
 
 }

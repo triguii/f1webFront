@@ -21,20 +21,20 @@ const CustomTooltip = ({ active, payload, label }) => {
         payload.length > 1 ? 
         <div>
           <h4>{label}</h4>
-          <p>{`Puntos ${payload[0].payload.team} : ${payload[0].payload["Puntos Ferrari"]}`}</p>
-          <p>{`Puntos ${payload[1].payload.team2} : ${payload[1].payload["Puntos RedBull"]}`}</p>
-          <p>{`Posición ${payload[0].payload.team} : ${payload[0].payload["Posición Ferrari"]}`}</p>
-          <p>{`Posición ${payload[1].payload.team2} : ${payload[1].payload["Posición RedBull"]}`}</p>
-          <p>{`Carrera : ${payload[0].payload.raceName}`}</p>
+          <p>{`Punts ${payload[0].payload.team} : ${payload[0].payload["Puntos Ferrari"]}`}</p>
+          <p>{`Punts ${payload[1].payload.team2} : ${payload[1].payload["Puntos RedBull"]}`}</p>
+          <p>{`Posició ${payload[0].payload.team} : ${payload[0].payload["Posición Ferrari"]}`}</p>
+          <p>{`Posició ${payload[1].payload.team2} : ${payload[1].payload["Posición RedBull"]}`}</p>
+          <p>{`Cursa : ${payload[0].payload.raceName}`}</p>
           <p>{`Ronda : ${payload[0].payload.round}`}</p>
   
         </div>
         :
         <div>
         <h4>{label}</h4>
-        <p>{`Puntos ${payload[0].payload.team} : ${payload[0].payload["Puntos Ferrari"]}`}</p>
-        <p>{`Posición ${payload[0].payload.team} : ${payload[0].payload["Posición Ferrari"]}`}</p>
-        <p>{`Carrera: ${payload[0].payload.raceName}`}</p>
+        <p>{`Punts ${payload[0].payload.team} : ${payload[0].payload["Puntos Ferrari"]}`}</p>
+        <p>{`Posició ${payload[0].payload.team} : ${payload[0].payload["Posición Ferrari"]}`}</p>
+        <p>{`Cursa: ${payload[0].payload.raceName}`}</p>
         <p>{`Ronda : ${payload[0].payload.round}`}</p>
    
       </div>
@@ -66,13 +66,13 @@ export default function ConstructorsTimeGraph ({}) {
         let datatoappend = []
 
       
-        fetch("http://127.0.0.1:8080/api/getConstructorStandings/6")
+        fetch("https://flask-api-lake.vercel.app/api/getConstructorStandings/6")
         .then((response) => response.json())
         .then((data) => {
 
             datatoappend.push(...data)
 
-            fetch("http://127.0.0.1:8080/api/getConstructorStandings/9")
+            fetch("https://flask-api-lake.vercel.app/api/getConstructorStandings/9")
             .then((response) => response.json())
             .then((data) => {
 
@@ -90,7 +90,7 @@ export default function ConstructorsTimeGraph ({}) {
 
               });
 
-              fetch("http://127.0.0.1:8080/api/getConstructorStandings/19")
+              fetch("https://flask-api-lake.vercel.app/api/getConstructorStandings/19")
               .then((response) => response.json())
               .then((data) => {
      
@@ -110,7 +110,7 @@ export default function ConstructorsTimeGraph ({}) {
   
                 });
 
-                fetch("http://127.0.0.1:8080/api/getConstructorStandings/24")
+                fetch("https://flask-api-lake.vercel.app/api/getConstructorStandings/24")
                 .then((response) => response.json())
                 .then((data) => {
        
@@ -192,35 +192,39 @@ export default function ConstructorsTimeGraph ({}) {
 
     return( loading? '' :
         <>
-        {graphType == 'points' ? <h2 style={{textAlign: 'center'}}>Evolución de puntos conseguidos por carrera en cada temporada</h2> : 
-        graphType == 'position' ? <h2 style={{textAlign: 'center'}}>Evolución de posición en el mundial cada temporada</h2> :
-        <h2 style={{textAlign: 'center'}}>Evolución de puntos acumulaods conseguidos historicamente desde 1997</h2>
+        {graphType == 'points' ? <h2 style={{textAlign: 'center'}}>Evolució de punts aconseguits per cursa a cada temporada</h2> : 
+        graphType == 'position' ? <h2 style={{textAlign: 'center'}}>Evolució de posició en el mundial a cada temporada</h2> :
+        <h2 style={{textAlign: 'center'}}>Evolució de punts acumulats aconseguits historicament desde 1997 (Escala quadràtica al eix Y)</h2>
         }
         
-        <h4 style={{textAlign: 'center'}}>Seleccionar año/s</h4>
-        <Slider
-          getAriaLabel={() => 'Año'}
-          value={años}
-          onChange={handleChange}
-          valueLabelDisplay="auto"
-          min={1997}
-          max={2009}
-          sx={{width: '10rem', position:'absolute', left: '47%',marginBottom: '1rem'}}
-        />
-        <Select
-          labelId="selectType"
-          id="selectType"
-          value={graphType}
-          label="Valor"
-          onChange={handleChangeGraph}
-          sx={{marginLeft: '50rem'}}
-        >
-          <MenuItem value={'position'}>Posición Mundial</MenuItem>
-          <MenuItem value={'points'}>Puntos Mundial</MenuItem>
-          <MenuItem value={'pointsRa'}>Puntos en cada carrera</MenuItem>
-          <MenuItem value={'pointsAcc'}>Puntos acumulados</MenuItem>
+        <h4 style={{textAlign: 'center'}}>Seleccionar any/s i dades a mostrar</h4>
+        <div style={{ display: 'inline-block', justifyContent: 'center' }}>
+
+            <Slider
+              getAriaLabel={() => 'Año'}
+              value={años}
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              min={1997}
+              max={2009}
+              sx={{width: '10rem',marginBottom: '1rem'}}
+            />
+            <Select
+              labelId="selectType"
+              id="selectType"
+              value={graphType}
+              label="Valor"
+              onChange={handleChangeGraph}
+              sx={{marginLeft: '10rem'}}
+            >
+          <MenuItem value={'position'}>Posició Mundial</MenuItem>
+          <MenuItem value={'points'}>Punts Mundial</MenuItem>
+          <MenuItem value={'pointsRa'}>Punts en cada cursa</MenuItem>
+          <MenuItem value={'pointsAcc'}>Punts acumulats</MenuItem>
 
         </Select>
+        </div>
+
         <div style={{marginLeft: '20%'}}>
 
         <LineChart

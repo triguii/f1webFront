@@ -32,15 +32,16 @@ export default function VictoryBar ({graphsData}) {
 
     
     return(
+      <div>
         <BarChart
         width={1000}
         height={800}
         data={barData}
         margin={{
           top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
+          right: 5,
+          left: 5,
+          bottom: 5
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -51,5 +52,6 @@ export default function VictoryBar ({graphsData}) {
         <Bar dataKey="Alonso" fill={colorPilots['4']}  />
         <Bar dataKey="Vettel" fill={colorPilots['20']}  />
       </BarChart>
+      </div>
     )
 }

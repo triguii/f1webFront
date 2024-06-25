@@ -19,20 +19,20 @@ const CustomTooltip = ({ active, payload, label }) => {
       payload.length > 1 ? 
       <div>
         <h4>{label}</h4>
-        <p>{`Puntos Alonso : ${payload[0].payload.Alonso}`}</p>
-        <p>{`Puntos Vettel : ${payload[1].payload.Vettel}`}</p>
-        <p>{`Posición Alonso : ${payload[1].payload['Posicion Alonso']}`}</p>
-        <p>{`Posición Vettel : ${payload[1].payload['Posicion Vettel']}`}</p>
-        <p>{`Carrera : ${payload[0].payload.raceName}`}</p>
+        <p>{`Punts Alonso : ${payload[0].payload.Alonso}`}</p>
+        <p>{`Punts Vettel : ${payload[1].payload.Vettel}`}</p>
+        <p>{`Posició Alonso : ${payload[1].payload['Posicion Alonso']}`}</p>
+        <p>{`Posició Vettel : ${payload[1].payload['Posicion Vettel']}`}</p>
+        <p>{`Cursa : ${payload[0].payload.raceName}`}</p>
         <p>{`Ronda : ${payload[0].payload.round}`}</p>
 
       </div>
       :
       <div>
       <h4>{label}</h4>
-      <p>{`Puntos Alonso : ${payload[0].payload.Alonso}`}</p>
-      <p>{`Posición Alonso : ${payload[0].payload['Posicion Alonso']}`}</p>
-      <p>{`Carrera: ${payload[0].payload.raceName}`}</p>
+      <p>{`Punts Alonso : ${payload[0].payload.Alonso}`}</p>
+      <p>{`Posició Alonso : ${payload[0].payload['Posicion Alonso']}`}</p>
+      <p>{`Cursa: ${payload[0].payload.raceName}`}</p>
       <p>{`Ronda : ${payload[0].payload.round}`}</p>
 
 
@@ -62,13 +62,13 @@ export default function StandingsTimeGraph ({años}) {
         let datatoappend = []
 
       
-        fetch("http://127.0.0.1:8080/api/getDriverStandings/4")
+        fetch("https://flask-api-lake.vercel.app/api/getDriverStandings/4")
         .then((response) => response.json())
         .then((data) => {
 
             datatoappend.push(...data)
 
-            fetch("http://127.0.0.1:8080/api/getDriverStandings/20")
+            fetch("https://flask-api-lake.vercel.app/api/getDriverStandings/20")
             .then((response) => response.json())
             .then((data) => {
    
@@ -121,8 +121,8 @@ export default function StandingsTimeGraph ({años}) {
 
     return( loading? '' :
         <>
-        {graphType == 'points' ? <h2 style={{textAlign: 'center'}}>Evolución de puntos conseguidos por carrera en cada temporada</h2> : 
-        <h2 style={{textAlign: 'center'}}>Evolución de posición en el mundial en cada carrera</h2>
+        {graphType == 'points' ? <h2 style={{textAlign: 'center'}}>Evolució de punts aconseguits por cursa en cada cursa</h2> : 
+        <h2 style={{textAlign: 'center'}}>Evolució de posició en el mundial en cada cursa</h2>
         }
 
         <Select
@@ -133,10 +133,10 @@ export default function StandingsTimeGraph ({años}) {
           onChange={handleChangeGraph}
           sx={{marginLeft: '1rem'}}
         >
-          <MenuItem value={'position'}>Posición Mundial</MenuItem>
-          <MenuItem value={'points'}>Puntos Mundial</MenuItem>
+          <MenuItem value={'position'}>Posició Mundial</MenuItem>
+          <MenuItem value={'points'}>Punts Mundial</MenuItem>
         </Select>
-        <div style={{marginLeft: '20%'}}>
+        <div>
 
         <LineChart
         width={1700}

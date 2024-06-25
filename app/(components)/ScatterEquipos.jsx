@@ -19,9 +19,9 @@ const CustomTooltip = ({ active, payload, label }) => {
   
           <div>
             <h4>{label}</h4>
-            <p>{`Posicion : ${payload[0].payload['Posicion Carrera']}`}</p>
-            <p>{`Equipo ${payload[0].payload['Equipo']}`}</p>
-            <p>{`Piloto ${payload[0].payload['Piloto']}`}</p>
+            <p>{`Posició : ${payload[0].payload['Posicion Carrera']}`}</p>
+            <p>{`Equip :  ${payload[0].payload['Equipo']}`}</p>
+            <p>{`Pilot :  ${payload[0].payload['Piloto']}`}</p>
 
     
           </div>
@@ -35,8 +35,6 @@ const CustomTooltip = ({ active, payload, label }) => {
 export default function ScatterEquipos ({graphsData}){
 
     const teamColors = getTeamColors()
-
-    console.log(graphsData)
 
     return(
     graphsData ?    
@@ -53,7 +51,7 @@ export default function ScatterEquipos ({graphsData}){
         <CartesianGrid />
         <XAxis type="category" dataKey="Equipo" name="Equipo" label="Equipo" allowDuplicatedCategory={false}/>
         <YAxis reversed type="number"  dataKey="Posicion Carrera" name="Posición" label={{ value: "Posición", angle: -90, position: 'insideLeft' }}  domain={['1', 'dataMax']}/>
-
+        <ZAxis range={[100, 101]}/>
         <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<CustomTooltip />}/>
         
         

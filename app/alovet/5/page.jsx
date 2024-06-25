@@ -33,7 +33,7 @@ export default function alovetPage() {
 
     useEffect(() => {
 
-        fetch("http://127.0.0.1:8080/api/getRaceResults/" + raceId)
+        fetch("https://flask-api-lake.vercel.app/api/getRaceResults/" + raceId)
         .then((response) => response.json())
         .then((data) => {
 
@@ -58,7 +58,7 @@ export default function alovetPage() {
         setLapsData([])
 
         pilots.map(pilot => {   
-            fetch("http://127.0.0.1:8080/api/getRaceTimes/" + raceId + "/" + pilotsObject[pilot])
+            fetch("https://flask-api-lake.vercel.app/api/getRaceTimes/" + raceId + "/" + pilotsObject[pilot])
             .then((response) => response.json())
             .then((data) => {
   

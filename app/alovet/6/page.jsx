@@ -25,7 +25,7 @@ export default function alovetPage() {
 
         setgraphsData([])
 
-        fetch("http://127.0.0.1:8080/api/getRacesYears/4/" + (años[0] - 1) + "/" + (años[1] + 1))
+        fetch("https://flask-api-lake.vercel.app/api/getRacesYears/4/" + (años[0] - 1) + "/" + (años[1] + 1))
         .then((response) => response.json())
         .then((data) => {
 
@@ -41,7 +41,7 @@ export default function alovetPage() {
 
             setgraphsData(graphsData => [...graphsData, data])
 
-            fetch("http://127.0.0.1:8080/api/getRacesYears/20/" +(años[0] - 1) + "/" + (años[1] + 1))
+            fetch("https://flask-api-lake.vercel.app/api/getRacesYears/20/" +(años[0] - 1) + "/" + (años[1] + 1))
             .then((response) => response.json())
             .then((data) => {
 

@@ -33,7 +33,7 @@ export default function Head2headGraph ({}){
         const yearDataVettel = finalRacesVettelId[selectedYear]
 
 
-        fetch("http://127.0.0.1:8080/api/getHead2Head/" +yearDataAlonso[0]+"/"+yearDataAlonso[1]+"/"+yearDataAlonso[2])
+        fetch("https://flask-api-lake.vercel.app/api/getHead2Head/" +yearDataAlonso[0]+"/"+yearDataAlonso[1]+"/"+yearDataAlonso[2])
         .then((response) => response.json())
         .then((data) => {
 
@@ -53,7 +53,7 @@ export default function Head2headGraph ({}){
 
             datatoappend.push(...data)
 
-            fetch("http://127.0.0.1:8080/api/getHead2Head/" +yearDataVettel[0]+"/"+yearDataVettel[1]+"/"+yearDataVettel[2])
+            fetch("https://flask-api-lake.vercel.app/api/getHead2Head/" +yearDataVettel[0]+"/"+yearDataVettel[1]+"/"+yearDataVettel[2])
             .then((response) => response.json())
             .then((data) => {
 
@@ -93,8 +93,8 @@ export default function Head2headGraph ({}){
 
 
     return(loading ? '':
-    <div style={{display: 'inline-block',  justifyContent: 'center', marginLeft: '35%'}}>
-        <h4 style={{textAlign: 'center'}}>Head 2 Head de los dos Pilotos contra sus compañeros</h4>
+    <div style={{display: 'inline-block',  justifyContent: 'center'}}>
+        <h4 style={{textAlign: 'center'}}>Comparació de punts dels dos pilots contra els seus companys d'equip</h4>
 
         <Select
             labelId="selectYear"
@@ -120,7 +120,7 @@ export default function Head2headGraph ({}){
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name"/>
-        <YAxis />
+        <YAxis label={{ value: "Punts", angle: -90, position: 'insideLeft', offset: -5 }}/>
         <Tooltip />
         <Bar dataKey="Alonso" stackId="Alonso" fill="#8884d8" />
         <Bar dataKey="Compañero Alonso" stackId="Alonso" fill="#82ca9d" />

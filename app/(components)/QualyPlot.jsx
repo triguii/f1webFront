@@ -30,7 +30,6 @@ export default function QualyPlot({ pilots, pilotsObject }) {
   ])
   const [tableData, setTableData] = useState([])
 
-
   useEffect(() => {
     setTableData([])
     setQualyData([
@@ -44,7 +43,7 @@ export default function QualyPlot({ pilots, pilotsObject }) {
     qualyData[2] = { "Sesión": 'Q3' }
 
     pilots.map(element => {
-      fetch("http://127.0.0.1:8080/api/getQualyData/355/" + pilotsObject[element])
+      fetch("https://flask-api-lake.vercel.app/api/getQualyData/355/" + pilotsObject[element])
         .then((response) => response.json())
         .then((data) => {
           let Q1Data = qualyData[0]
@@ -60,6 +59,8 @@ export default function QualyPlot({ pilots, pilotsObject }) {
 
           setQualyData([Q1Data, Q2Data, Q3Data])
           setTableData(tableData => [...tableData, data[0]])
+
+          
         })
 
 
