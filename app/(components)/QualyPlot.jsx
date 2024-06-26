@@ -94,7 +94,7 @@ export default function QualyPlot({ pilots, pilotsObject }) {
         {Object.entries(qualyData[0]).map((element, index) => {
           return (
             element[0] != 'Sesión' ?
-              <Line type="linear" dataKey={element[0]} stroke={colorPilots[name2id[element[0]]]} />
+              <Line type="linear" dataKey={element[0]} stroke={colorPilots[name2id[element[0]]]} dot={{ strokeWidth: 6 }} />
               : ''
           )
         })}

@@ -82,6 +82,7 @@ export default function alovetPage() {
     const pilotsObject = getName2Id()
 
     return (
+        lapsData && standingsData ?  
         <>
             <ArrowBackIos sx={{ position: 'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem' }} onClick={() => {
                 router.push('/alovet/4')
@@ -122,6 +123,7 @@ export default function alovetPage() {
 
 
 
-        </>
+        </> 
+        : ''
     )
 }

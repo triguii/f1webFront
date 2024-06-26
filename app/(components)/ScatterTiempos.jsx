@@ -43,7 +43,7 @@ export default function ScatterTiempos ({graphsData, outliers}){
 
     useEffect(() => {
       setFilteredData ([])
-      if (!outliers && graphsData) {
+      if (!outliers && graphsData[0]) {
         const minTime = graphsData[0].reduce((min, obj) => {
           return obj["Tiempo sec"] < min && obj["Tiempo sec"] ? obj["Tiempo sec"] : min;
         }, Infinity);
