@@ -1,4 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## F1Web Frontend
+
+This repository holds the code for the front-end of the F1 webpage (https://f1web-rose.vercel.app), developed using React and NextJS.
+
+## Directory distribution
+
+'''bash
+├───app
+  ├───(components)
+  └───alovet
+      ├───1
+      ├───2
+      ├───3
+      ├───4
+      ├───5
+      └───6
+└───config
+└───public
+  └───alovet
+'''
+
+app : here we can find all the .jsx code for the webpage, as well as the css. Inside the components folder there are all the react components for the different visualizations of the page. In the alovet folder we find the main source code for the different pages inside the web.
+
+config : here we can find different helpers and global variables for the page, such as colors for the different pilots in the graphics.
+
+public : here we can find images and other resources that the web uses.
+
 
 ## Getting Started
 
@@ -28,9 +54,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
