@@ -4,7 +4,7 @@ This repository holds the code for the front-end of the F1 webpage (https://f1we
 
 ## Directory distribution
 
-'''bash
+```bash
 ├───app
   ├───(components)
   └───alovet
@@ -17,7 +17,7 @@ This repository holds the code for the front-end of the F1 webpage (https://f1we
 └───config
 └───public
   └───alovet
-'''
+```
 
 app : here we can find all the .jsx code for the webpage, as well as the css. Inside the components folder there are all the react components for the different visualizations of the page. In the alovet folder we find the main source code for the different pages inside the web.
 
