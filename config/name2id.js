@@ -24,7 +24,8 @@ export default function getName2Id() {
             "Vitaly Petrov": "808",
             "Kamui Kobayashi": "155",
             "Lucas Di Grassi": "810",
-            "Nick Heidfeld" : "2"
+            "Nick Heidfeld" : "2",
+
 
         }
 

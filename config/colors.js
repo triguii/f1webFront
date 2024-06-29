@@ -26,7 +26,17 @@ export default function getColorPilots ()
     "155" : "gray",
     "810" : "gray",
     "812" : "gray", 
-    "2" : "gray"      
+    "2" : "gray",
+    "154" : "gray",
+    "815" : "gray",
+    "814" : "gray",
+    "817" : "gray",
+    "818" : "gray",
+    "821" : "gray",
+    "822" : "gray",
+    "813" : "gray",
+    "8" : "gray"
+
 }
 
     )

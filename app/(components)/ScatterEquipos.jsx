@@ -49,7 +49,7 @@ export default function ScatterEquipos ({graphsData}){
         }}
       >
         <CartesianGrid />
-        <XAxis type="category" dataKey="Equipo" name="Equipo" label="Equipo" allowDuplicatedCategory={false}/>
+        <XAxis type="category" dataKey="Equipo" name="Equipo" allowDuplicatedCategory={false}/>
         <YAxis reversed type="number"  dataKey="Posicion Carrera" name="Posición" label={{ value: "Posición", angle: -90, position: 'insideLeft' }}  domain={['1', 'dataMax']}/>
         <ZAxis range={[100, 101]}/>
         <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<CustomTooltip />}/>

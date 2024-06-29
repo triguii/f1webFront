@@ -1,103 +1,174 @@
 'use client'
 
-import { React, useEffect, useState } from "react"
-import { ArrowBackIos } from "@mui/icons-material";
+import { Slider, Switch } from '@mui/material';
+import Standings2010 from "@/app/(components)/Standings2010"
+import { useState, useEffect } from 'react';
+import RaceStandingsTable from '@/app/(components)/RaceStandingsTable';
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { useRouter } from 'next/navigation';
-import VictoryBar from "@/app/(components)/VictoryBar";
-import { Slider } from "@mui/material";
-import TimeDiffBar from "@/app/(components)/TimeDiffBar";
+import ScatterTiempos from '@/app/(components)/ScatterTiempos';
 
+
+import ScatterEquipos from '@/app/(components)/ScatterEquipos';
 
 export default function alovetPage() {
 
-    const [graphsData, setgraphsData] = useState([])
-
-    const router = useRouter()
-    const [años, setAños] = useState([2010, 2013 ]);
-
-
     const handleChange = (event, newValue) => {
-        setAños(newValue);
+        setRound(newValue);
     };
 
 
+    const handleChangeSwitch = (event) => {
+      setChecked(event.target.checked);
+    };
+
+    const [graphData, setGraphData] = useState(false)
+    const [checked, setChecked] = useState(true);
+    const [races, setRaces] = useState([841, 859])
+    const [round, setRound] = useState(841)
+    const [imageGanador, setImageGanador] = useState('')
+    const [lapsData, setLapsData] = useState([])
+
+    const pilots = ["4", "20"]
+
     useEffect(() => {
+        setLapsData([])
 
-        setgraphsData([])
+        pilots.map(pilot => {
+            fetch("https://flask-api-lake.vercel.app/api/getRaceTimes/" + round + "/" + pilot)
+                .then((response) => response.json())
+                .then((data) => {
 
-        fetch("https://flask-api-lake.vercel.app/api/getRacesYears/4/" + (años[0] - 1) + "/" + (años[1] + 1))
-        .then((response) => response.json())
-        .then((data) => {
+                    let datatoadd = []
 
-            data.sort((a, b) => {
-                if (a.Año != b.Año){
-                    return a.Año - b.Año; // Ascending order
-                }
-                else {
-                    return a.Ronda - b.Ronda;
-                }
-                // To sort in descending order, use: return b.age - a.age;
-            })
+                    data.forEach(element => {
 
-            setgraphsData(graphsData => [...graphsData, data])
+                        element['Tiempo sec'] = (element['Tiempo ms'] / 1000)
+                        datatoadd.push(element)
 
-            fetch("https://flask-api-lake.vercel.app/api/getRacesYears/20/" +(años[0] - 1) + "/" + (años[1] + 1))
+                    })
+
+                    datatoadd.sort((a, b) => {
+                        
+                        return a.Vuelta - b.Vuelta
+                        
+                    })
+
+                    if (lapsData) {
+                        setLapsData(lapsData => [...lapsData, datatoadd])
+                    }
+                    else {
+                        setLapsData(datatoadd)
+                    }
+
+                })
+
+        })
+
+        fetch("https://flask-api-lake.vercel.app/api/getRaceResults/" + round)
             .then((response) => response.json())
             .then((data) => {
 
                 data.sort((a, b) => {
-                    if (a.Año != b.Año){
-                        return a.Año - b.Año; // Ascending order
-                    }
-                    else {
-                        return a.Ronda - b.Ronda;
-                    }
-                    // To sort in descending order, use: return b.age - a.age;
-                })
 
-                setgraphsData(graphsData => [...graphsData, data])
+                    return a['Posicion Mundial'] - b['Posicion Mundial']; // Ascending order
+
+
+                    // To sort in descending order, use: return b.age - a.age;
+                });
+
+                setGraphData(data)
+                setImageGanador(data.find((element) => element['Posicion Carrera'] == 1))
 
 
             })
+    }, [round])
 
 
-        })
+    const router = useRouter()
+
+    const driverToTeam = { 'Hamilton': 'Mclaren', 'Button': 'Mclaren', 'Webber': 'Redbull', 'Vettel': 'Redbull', 'Alonso': 'Ferrari', 'Räikkönen' : 'Lotus' }
+
+    const pathImg = "/alovet/" + imageGanador.Piloto + "_2010.jpg"
 
 
-    }, [años])
 
 
-    return(
+    return (
+        graphData ?
+            <article style={{ textAlign: 'center', marginLeft: '2rem', marginRight: '2rem' }}>
+                <ArrowBackIos sx={{ position: 'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem' }} onClick={() => {
+                    router.push('/alovet/5')
+                }} />
+                <ArrowForwardIos sx={{ position: 'fixed', right: '2rem', float: 'left', cursor: 'pointer' }} onClick={() => {
+                    router.push('/alovet/7')
+                }} />
+                <h1 style={{ textAlign: 'center', fontSize: '40px' }}>Mundial de 2011 : Segon enfrontament</h1>
+                <h2 style={{ fontSize: '30px' }}> Consolidació al campionat de Vettel </h2>
 
-    <>
-        <ArrowBackIos sx={{ position: 'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem' }} onClick={() => {
-            router.push('/alovet/5')
-            }} />
+                <p style={{ color: "#121f45", fontSize: '25px', fontWeight: 'bold' }}> Una temporada molt menys renyida on Vettel va demostrar que ser campió a 2010 no va ser cosa de sort</p>
+                <hr style={{ height: '3px', boxShadow: '2', backgroundColor: 'black', marginBottom: '2rem' }} />
 
-        <h2>Alonso vs Vettel: 2010 - 2013</h2>
-        <Slider
-          getAriaLabel={() => 'Año'}
-          value={años}
-          onChange={handleChange}
-          valueLabelDisplay="auto"
-          min={2010}
-          max={2013}
-          sx={{width: '10rem', marginLeft: '47%'}}
-        />
 
-        <div>
-            <h4>Distribución de las posiciones conseguidas</h4>
-            <VictoryBar graphsData={graphsData}/>
-            
-        </div>
+                <h4 style={{ color: "#121f45", fontSize: '20px' }}> Fes ús d'aquest control per seleccionar quina cursa vols veure de la temporada i veure l'evolució</h4>
 
-        <div>
-            <h4>Diferencia de tiempos en la mejor vuelta de cada carrera</h4>
-            <TimeDiffBar graphsData={graphsData}/>
-            
-        </div>
-    </>
-        
+                <Slider
+                    getAriaLabel={() => 'Ronda'}
+                    value={round}
+                    onChangeCommitted={handleChange}
+                    marks
+                    min={races[0]}
+                    max={races[1]}
+                    sx={{ width: '20rem', marginTop: '1rem', marginLeft: '3rem' }}
+                />
+
+
+
+                <h2>{graphData[0].name} (Ronda {graphData[0].ronda})</h2>
+                <div>
+                    <div style={{ display: 'inline-block', marginRight: '10rem', verticalAlign: 'middle' }}>
+
+                        <img src={pathImg} style={{ width: '400px' }}></img>
+                        <h2>{imageGanador.Piloto} i {driverToTeam[imageGanador.Piloto]} van aconseguir la victoria.</h2>
+                    </div>
+                    <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+
+                        <h4>Resultados de la carrera</h4>
+
+                        <RaceStandingsTable standingsData={graphData} />
+                    </div>
+                </div>
+                <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
+                    <h4>Clasificació del mundial després de la cursa</h4>
+                    <Standings2010 standingsData={graphData} />
+
+                </div>
+
+                <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
+                    <h4>En quant als diferents equips, així va ser com van quedar a la cursa</h4>
+                    <ScatterEquipos graphsData={graphData} />
+
+
+                </div>
+                <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
+                    <h4>I els nostres dos protagonistes, aquí podem veure la seva evolució dels temps de les voltes al llarg de la cursa. </h4>
+                    <h4 style={{fontWeight: 'normal'}}>Els outliers es deben a parades a boxes o cotxes de seguretat. Si vols eliminar-los, desactiva aquest control:</h4>
+                    <Switch
+                        checked={checked}
+                        onChange={handleChangeSwitch}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+
+    
+                    <ScatterTiempos graphsData={lapsData} outliers={checked}/>
+
+                </div>
+
+
+
+
+
+            </article> : ''
     )
 
 }

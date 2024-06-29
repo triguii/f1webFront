@@ -2,6 +2,22 @@ import React from 'react';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import getColorPilots from '@/config/colors'
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+
+        <div>
+          <h4>Posició : {label}</h4>
+          <p>{`Recompte Alonso :  ${payload[0].payload['Alonso']} cops`}</p>
+          <p>{`Recompte Vettel :  ${payload[0].payload['Vettel']} cops`}</p>
+  
+        </div>
+
+    )
+  }
+  return null;
+};
+
 
 export default function VictoryBar ({graphsData}) {
     const colorPilots = getColorPilots()
@@ -45,9 +61,9 @@ export default function VictoryBar ({graphsData}) {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Posición" label="Vuelta"/>
-        <YAxis label={{ value: "Recuento", angle: -90, position: 'insideLeft' }} />
-        <Tooltip />
+        <XAxis dataKey="Posición" label="Posició"/>
+        <YAxis label={{ value: "Recompte", angle: -90, position: 'insideLeft' }} />
+        <Tooltip content={<CustomTooltip/>}/>
         <Legend />
         <Bar dataKey="Alonso" fill={colorPilots['4']}  />
         <Bar dataKey="Vettel" fill={colorPilots['20']}  />

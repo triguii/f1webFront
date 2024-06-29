@@ -13,8 +13,25 @@ function timeStringToSeconds(timeString) {
 
     const totalSeconds = minutesInSeconds + secondsPart + millisecondsPart;
 
-    return totalSeconds;
+    return parseFloat(totalSeconds);
 }
+
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+  
+          <div>
+            <h4>{label}</h4>
+            <p>{`Diferencia de temps :  ${parseFloat(payload[0].payload['Diff']).toFixed(2)} s`}</p>
+
+    
+          </div>
+
+      )
+    }
+    return null;
+  };
 
 export default function TimeDiffBar({ graphsData }) {
     const colorPilots = getColorPilots()
@@ -28,7 +45,7 @@ export default function TimeDiffBar({ graphsData }) {
                 const elementToAdd = {
                     "NumRonda": index,
                     "Carrera": element.Carrera,
-                    "Diff": timeStringToSeconds(element.VRapida) - timeStringToSeconds(graphsData[0][index].VRapida)
+                    "Diff": parseFloat(timeStringToSeconds(element.VRapida) - timeStringToSeconds(graphsData[0][index].VRapida))
                 }
 
                 barData.push(elementToAdd)
@@ -54,10 +71,9 @@ export default function TimeDiffBar({ graphsData }) {
         >
             <CartesianGrid strokeDasharray="3 3"/>
             <XAxis dataKey="Carrera" label="Carrera" />
-            <YAxis label={{ value: "Diferencia de tiempo a favor de Alonso en sus vueltas más rápidas (s)", angle: -90, position: 'insideLeft', offset: -5 }} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="Diff" name="Diferencia de tiempo a favor de Alonso (s)">
+            <YAxis label={{ value: "Diferencia de tiempo a favor de Alonso en sus vueltas más rápidas (s)", angle: -90, position: 'insideLeft', offset: -5 }}/>
+            <Tooltip content={<CustomTooltip/>}/>
+            <Bar dataKey="Diff" name="Diferencia de temps a favor de Alonso (s)">
                 {
                   barData.map((entry, index) => (
                     <Cell key={index} fill={barData[index].Diff > 0 ? colorPilots['4'] : colorPilots['20']}/>

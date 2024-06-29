@@ -11,7 +11,8 @@ export default function getTeamColors ()
         "Force India": "#F596C8",     // Pink
         "Sauber": "#006EFF",          // Blue
         "Toro Rosso": "#469BFF",      // Blue
-        "Lotus": "#00530D",    // Green
+        "Lotus": "#00530D", 
+        "Lotus F1": "#00530D",    // Green
         "HRT": "#2C2825",             // Black
         "Virgin": "#D91E36"    // Red
 

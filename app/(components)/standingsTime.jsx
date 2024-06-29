@@ -161,13 +161,13 @@ export default function StandingsTimeGraph ({años}) {
         <Line
           type="monotone"
           dataKey={graphType == 'position' ? "Posicion Alonso" : "Alonso"}
-          stroke="#8884d8"
+          stroke="#ff2800"
           strokeWidth={3}
         />
         <Line
           type="monotone"
           dataKey={graphType == 'position' ? "Posicion Vettel" : "Vettel"}
-          stroke="#82ca9d"
+          stroke="#121f45"
           strokeWidth={3}
         />
       </LineChart>
