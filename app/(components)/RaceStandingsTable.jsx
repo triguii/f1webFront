@@ -4,7 +4,13 @@ import { DataGrid } from '@mui/x-data-grid';
 const columns = [
   {
     field: 'Posicion Carrera',
-    headerName: 'Posició final',
+    headerName: 'Posició a la cursa',
+    type: 'number',
+    width: 150,
+  },
+  {
+    field: 'Posicion Mundial',
+    headerName: 'Posició al mundial',
     type: 'number',
     width: 130,
   },
@@ -30,7 +36,8 @@ const columns = [
 ];
 
 export default function RaceStandingsTable({ standingsData }) {
-
+  
+  console.log(standingsData)
   const [sortModel, setSortModel] = React.useState([
     {
       field: 'Posicion Carrera',
@@ -40,7 +47,7 @@ export default function RaceStandingsTable({ standingsData }) {
 
 
   return (
-    <div style={{ height: 400, width: 900 }}>
+    <div style={{ height: 400, width: 1050 }}>
       <DataGrid
         rows={standingsData}
         columns={columns}

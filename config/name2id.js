@@ -10,7 +10,7 @@ export default function getName2Id() {
             "Nico Rosberg": "3",
             "Michael Schumacher": "30",
             "Jenson Button": "18",
-            "Viantonio Liuzzi": "24",
+            "Vitantonio Liuzzi": "24",
             "Rubens Barrichello": "22",
             "Robert Kubica": "9",
             "Adrian Sutil": "16",

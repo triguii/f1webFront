@@ -19,8 +19,8 @@ export default function RacePosition ({graphsData}){
     return(    
     <LineChart width={1500} height={1000} >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis type="number" dataKey="Vuelta" label="Vuelta" name="Vuelta"/>
-        <YAxis domain={[1, 22]} label={{ value: 'Posición', angle: -90, position: 'insideLeft' }} reversed/>
+        <XAxis type="number" dataKey="Vuelta" label="Volta" name="Vuelta"/>
+        <YAxis domain={[1, 22]} label={{ value: 'Posición',label :"Posició", angle: -90, position: 'insideLeft' }} reversed/>
         <Tooltip />
         <Legend />
         {graphsData.map((element, index) => {
@@ -28,7 +28,7 @@ export default function RacePosition ({graphsData}){
                 return a.Vuelta - b.Vuelta; // Ascending order
                 
             });
-          return(<Line dataKey="Posición" key={index} dot= {false} type="monotone" name={element[0]["Piloto"]} data={element} stroke={colorPilots[(element[0]["driverId"]).toString()]} />)
+          return(<Line dataKey="Posición" key={index} dot= {false} type="monotone" name={element[0] ? element[0]["Piloto"] : ''} data={element} stroke={element[0] ? colorPilots[(element[0]["driverId"]).toString()] : ''} />)
         })}
 
       </LineChart>)

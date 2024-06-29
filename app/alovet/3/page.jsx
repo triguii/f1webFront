@@ -48,6 +48,12 @@ export default function alovetPage() {
 
                     })
 
+                    datatoadd.sort((a, b) => {
+                        
+                        return a.Vuelta - b.Vuelta
+                        
+                    })
+
                     if (lapsData) {
                         setLapsData(lapsData => [...lapsData, datatoadd])
                     }
@@ -109,7 +115,7 @@ export default function alovetPage() {
                 <Slider
                     getAriaLabel={() => 'Ronda'}
                     value={round}
-                    onChange={handleChange}
+                    onChangeCommitted={handleChange}
                     marks
                     min={races[0]}
                     max={races[1]}
@@ -146,7 +152,7 @@ export default function alovetPage() {
                 </div>
                 <div style={{ margin: 'auto', color: "#121f45", fontSize: '20px', display: 'inline-block', justifyContent: 'center' }}>
                     <h4>I els nostres dos protagonistes, aquí podem veure la seva evolució dels temps de les voltes al llarg de la cursa. </h4>
-                    <h4 style={{fontWeight: 'normal'}}>Els outliers es deben a parades a boxes. Si vols eliminar-los, desactiva aquest control:</h4>
+                    <h4 style={{fontWeight: 'normal'}}>Els outliers es deben a parades a boxes o cotxes de seguretat. Si vols eliminar-los, desactiva aquest control:</h4>
                     <Switch
                         checked={checked}
                         onChange={handleChangeSwitch}

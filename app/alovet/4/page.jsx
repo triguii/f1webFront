@@ -55,13 +55,6 @@ export default function alovetPage() {
             })
     }, [])
 
-    useEffect(() => {
-        if (graphData) {
-            setFilteredGraphData(graphData.filter((element) => pilots.includes(element["Piloto Nombre"] + " " + element["Piloto"])))
-        }
-
-    }, [pilots])
-
 
     return (filteredGraphData ?
         <article style={{ textAlign: 'center', marginLeft: '2rem', marginRight: '2rem' }}>
@@ -91,7 +84,7 @@ export default function alovetPage() {
             </p>
             <div style={{ display: 'inline-block', marginRight: '10rem', verticalAlign: 'middle' }}>
 
-                <Standings2010 standingsData={filteredGraphData} dataMin={pilots.length > 0 ? true : false} />
+                <Standings2010 standingsData={graphData} dataMin={false} />
 
             </div>
 

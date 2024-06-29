@@ -79,7 +79,7 @@ export default function ScatterTiempos ({graphsData, outliers}){
         <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<CustomTooltip />}/>
         <Legend />
         {filteredData.map((element, index) => {
-          return(<Scatter line key={index} name={element[0]["Piloto"]} data={element} fill={colorPilots[(element[0]["driverId"]).toString()]} />)
+          return(<Scatter line key={index} name={element[0] ? element[0]["Piloto"] : ''} data={element} fill={element[0] ? colorPilots[(element[0]["driverId"]).toString()] : ''} />)
           
         })}
       </ScatterChart>
