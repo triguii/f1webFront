@@ -122,10 +122,10 @@ export default function Head2headGraph ({}){
         <XAxis dataKey="name"/>
         <YAxis label={{ value: "Punts", angle: -90, position: 'insideLeft', offset: -5 }}/>
         <Tooltip />
-        <Bar dataKey="Alonso" stackId="Alonso" fill="#8884d8" />
-        <Bar dataKey="Compañero Alonso" stackId="Alonso" fill="#82ca9d" />
-        <Bar dataKey="Vettel" stackId="Vettel" fill="red" />
-        <Bar dataKey="Compañero Vettel" stackId="Vettel" fill="#82ca9d" />
+        <Bar dataKey="Alonso" stackId="Alonso" fill="#ff2800" />
+        <Bar dataKey="Compañero Alonso" label="Company d'Alonso" stackId="Alonso" fill="gray" />
+        <Bar dataKey="Vettel" stackId="Vettel" fill="#121f45" />
+        <Bar dataKey="Compañero Vettel" label="Company de Vettel" stackId="Vettel" fill="gray" />
 
       </BarChart>
       </div>

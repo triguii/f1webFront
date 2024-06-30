@@ -53,7 +53,7 @@ export default function Standings2010({ standingsData, dataMin = false }) {
         bottom: 5,
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
+      <CartesianGrid strokeDasharray="3 3"/>
       {dataMin ? <XAxis type="number" domain={['dataMin - 10', 'dataMax + 10']} /> : <XAxis type="number" />}
 
       <YAxis type="category" dataKey="Piloto" />

@@ -96,6 +96,8 @@ export default function alovetPage() {
 
     return (
         graphData ?
+        <>
+            <div id="background" style={{backgroundImage: `url(/bgf3.jpg)`}}></div>
             <article style={{ textAlign: 'center', marginLeft: '2rem', marginRight: '2rem' }}>
                 <ArrowBackIos sx={{ position: 'fixed', left: '2rem', float: 'right', cursor: 'pointer', marginBottom: '1rem' }} onClick={() => {
                     router.push('/alovet/7')
@@ -168,7 +170,7 @@ export default function alovetPage() {
 
 
 
-            </article> : ''
+            </article></> : ''
     )
 
 }

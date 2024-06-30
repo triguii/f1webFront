@@ -60,7 +60,7 @@ export default function VictoryBar ({graphsData}) {
           bottom: 5
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3"/>
         <XAxis dataKey="Posición" label="Posició"/>
         <YAxis label={{ value: "Recompte", angle: -90, position: 'insideLeft' }} />
         <Tooltip content={<CustomTooltip/>}/>
