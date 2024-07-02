@@ -235,7 +235,7 @@ export default function ConstructorsTimeGraph({ }) {
         </Select>
       </div>
 
-      <div style={{ marginLeft: '20%' }}>
+      <div>
 
         <LineChart
           width={2000}
@@ -247,7 +247,7 @@ export default function ConstructorsTimeGraph({ }) {
             left: 5,
             bottom: 5
           }}
-          style={{ position: 'absolute', left: '10%', marginTop: '5rem' }}
+          style={{  marginTop: '5rem' }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
