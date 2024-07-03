@@ -143,7 +143,7 @@ export default function alovetPage() {
         quins anys es volen filtrar
       </p>
 
-      <h4 style={{ textAlign: 'center', marginTop: '1rem' }}>Seleccionar año/s</h4>
+      <h4 style={{ textAlign: 'center', marginTop: '1rem' }}>Seleccionar anys/s</h4>
 
       <div style={{ display: 'inline-block', justifyContent: 'center' }}>
 

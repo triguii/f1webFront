@@ -6,8 +6,8 @@ export default function getTeamColors ()
         "McLaren": "#FF8700",         // Orange
         "Ferrari": "#DC0000",         // Red
         "Mercedes": "#00D2BE",        // Turquoise
-        "Renault": "#F7E600",         // Yellow
-        "Williams": "#FFFFFF",        // White
+        "Renault": "#b2b200",         // Yellow
+        "Williams": "#A020F0",        // White
         "Force India": "#F596C8",     // Pink
         "Sauber": "#006EFF",          // Blue
         "Toro Rosso": "#469BFF",      // Blue

@@ -135,7 +135,7 @@ export default function alovetPage() {
                     </div>
                     <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
 
-                        <h4>Resultados de la carrera</h4>
+                        <h4>Resultats de la cursa</h4>
 
                         <RaceStandingsTable standingsData={graphData} />
                     </div>

@@ -66,7 +66,7 @@ export default function alovetPage() {
             <ArrowForwardIos sx={{ position: 'fixed', right: '2rem', float: 'left', cursor: 'pointer' }} onClick={() => {
                 router.push('/alovet/5')
             }} />
-            <h1 style={{ textAlign: 'center', fontSize: '40px' }}>Abu Dhabi 2010: Pelea final por el mundial</h1>
+            <h1 style={{ textAlign: 'center', fontSize: '40px' }}>Abu Dhabi 2010</h1>
             <h2 style={{ fontSize: '30px' }}> La lluita final per el campionat </h2>
             <p style={{ color: "#121f45", fontSize: '25px', fontWeight: 'bold' }}> L'última cursa de la temporada. Arribats a aquest punt, Alonso nomès tenia 6 punts d'avantatge respecte a Vettel. Per referencia, la distribució de punts d'aquesta cursa era la següent : <br /></p>
             <p style={{ color: "#121f45", fontSize: '25px' }}>
