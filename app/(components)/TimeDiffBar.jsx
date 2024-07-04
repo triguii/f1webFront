@@ -70,8 +70,8 @@ export default function TimeDiffBar({ graphsData }) {
             }}
         >
             <CartesianGrid strokeDasharray="3 3"/>
-            <XAxis dataKey="Carrera" label="Carrera" />
-            <YAxis label={{ value: "Diferencia de tiempo a favor de Alonso en sus vueltas más rápidas (s)", angle: -90, position: 'insideLeft', offset: -5 }}/>
+            <XAxis dataKey="Carrera" label="Cursa" />
+            <YAxis />
             <Tooltip content={<CustomTooltip/>}/>
             <Bar dataKey="Diff" name="Diferencia de temps a favor de Alonso (s)">
                 {
