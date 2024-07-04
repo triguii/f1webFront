@@ -31,6 +31,7 @@ export default function QualyTable ({qualyData}){
     return (    
     <div style={{ height: 400, width: 900 }}>
     <DataGrid
+      sx={{backgroundColor: 'white'}}
       rows={qualyData}
       getRowId={(row) => row.driverId}
       columns={columns}

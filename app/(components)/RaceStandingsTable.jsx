@@ -37,7 +37,6 @@ const columns = [
 
 export default function RaceStandingsTable({ standingsData }) {
   
-  console.log(standingsData)
   const [sortModel, setSortModel] = React.useState([
     {
       field: 'Posicion Carrera',
@@ -49,6 +48,7 @@ export default function RaceStandingsTable({ standingsData }) {
   return (
     <div style={{ height: 400, width: 1050 }}>
       <DataGrid
+        sx={{backgroundColor: 'white'}}
         rows={standingsData}
         columns={columns}
         sortModel={sortModel}

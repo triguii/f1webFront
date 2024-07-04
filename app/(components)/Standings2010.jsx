@@ -58,7 +58,6 @@ export default function Standings2010({ standingsData, dataMin = false }) {
 
       <YAxis type="category" dataKey="Piloto" />
       <Tooltip content={<CustomTooltip />} />
-      <Legend />
       <Bar dataKey="Puntos Mundial" fill="#8884d8">
         {
           standingsData.map((element, index) => (
