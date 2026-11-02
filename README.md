@@ -2,6 +2,8 @@
 
 This repository holds the code for the front-end of the F1 webpage (https://f1web-rose.vercel.app), developed using React and NextJS.
 
+The backend of this page is made with Python using Flask and MongoDB as a database. The source code is currently private.
+
 ## Directory distribution
 
 ```bash
