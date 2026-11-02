@@ -1,6 +1,9 @@
 ## F1Web Frontend
 
-This repository holds the code for the front-end of the F1 webpage (https://f1web-front.vercel.app/alovet/1), developed using React and NextJS.
+This repository holds the code for the front-end of the F1 webpage (https://f1web-front.vercel.app/alovet/1), developed using React and NextJS. This is a project on mine focused on showing F1 Data in a interactive and simple way, with a focus on storytelling. The page is no longer mantained.
+
+<img width="1501" height="700" alt="image" src="https://github.com/user-attachments/assets/d01ace81-f9f4-43a2-9656-b1411e78f7bb" />
+
 
 The backend of this page is made with Python using Flask and MongoDB as a database. The source code is currently private.
 
